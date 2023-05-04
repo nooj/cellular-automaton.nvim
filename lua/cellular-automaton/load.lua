@@ -30,7 +30,8 @@ local get_usable_window_width = function()
           let signwidth *= 2  " each signcolumn is 2-char wide
         elseif &signcolumn == 'auto'
           let supports_sign_groups = has('nvim-0.4.2') || has('patch-8.1.614')
-          let signlist = execute(printf('sign place ' . (supports_sign_groups ? 'group=* ' : '') . 'buffer=%d', bufnr('')))
+          let signlist = execute(printf('sign place ' . (supports_sign_groups ? 'group=* ' : '')
+              \. 'buffer=%d', bufnr('')))
           let signlist = split(signlist, "\n")
           let signwidth = len(signlist) > 2 ? 2 : 0
         elseif &signcolumn =~ 'auto'
@@ -77,6 +78,7 @@ M.load_base_grid = function(window, buffer)
     end
   end
   local data = vim.api.nvim_buf_get_lines(buffer, vertical_range.start, vertical_range.end_, true)
+
   -- update with buffer data
   for i, line in ipairs(data) do
     for j = 1, window_width do
